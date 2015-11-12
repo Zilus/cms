@@ -1,0 +1,28 @@
+.pagination {
+	float:right;
+    padding: 5px;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 0px 9px;
+    margin-right: 2px;
+    border-radius: 3px;
+    border: solid 1px #00a4d8;
+    background: #fff;
+    font-size: .875em;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination a:hover {
+    background: #fafafa;
+	text-decoration:none;
+}
+
+.pagination a.current {
+    border: none;
+    background: #00a4d8;
+	border: solid 1px #00a4d8;
+    color: #fafafa;
+}
