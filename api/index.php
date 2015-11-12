@@ -2,9 +2,28 @@
 include_once('../includes/config.php');
 include_once('../lib/database.class.php');
 require '../lib/Slim/Slim.php';
+$database = new Database();
+//auth
+$sql="SELECT * FROM settings WHERE settings_desc=:settings_desc";
+$database->query($sql);
+$database->bind(':settings_desc', "apiKey");
+$row = $database->single(); 
+$user=$row['settings_value'];
+$passwd=$row['settings_extra'];
+		
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
-$database = new Database();
+// Authorization: Basic OXR1Y3VTTXUwSjpiTEc3NUJ2bVpM
+$app->add(new \Slim\Middleware\HttpBasicAuthentication([
+	"users" => [
+		$user => $passwd
+	],
+	"error" => function ($arguments) use ($app) {
+		$response["status"] = "error";
+		$response["message"] = $arguments["message"];
+		$app->response->write(json_encode($response, JSON_UNESCAPED_SLASHES));
+	}
+]));
 
 $app->get('/users','getUsers');
 $app->get('/user/:user_id','getUsersId');

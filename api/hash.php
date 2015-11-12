@@ -6,6 +6,5 @@ function hash_password($password, $salt) {
     }
 	return $hash;
 }
-$pass=hash_password("9tucuSMu0J", "bLG75BvmZL");
-echo $pass;
+$pass=hash_password("1", "2");
 ?>
