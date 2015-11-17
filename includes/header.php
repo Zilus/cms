@@ -42,6 +42,7 @@ if($row_ambulance['settings_value']==1) {
 <link href="plugins/select2/select2.css" rel="stylesheet" type="text/css"/>
 <link href="assets/admin/pages/css/login.css" rel="stylesheet" type="text/css"/>
 <link href="assets/admin/pages/css/error.css" rel="stylesheet" type="text/css"/>
+<link href="assets/admin/pages/css/inbox.css" rel="stylesheet" type="text/css"/>
 <!-- END PAGE LEVEL SCRIPTS -->
 <!-- BEGIN THEME STYLES -->
 <link href="assets/global/css/components.css" rel="stylesheet" type="text/css"/>
@@ -104,6 +105,8 @@ Bug
 <script src="assets/global/plugins/flot/jquery.flot.tickrotor.js"></script>
 <script src="assets/global/plugins/jquery-validation/js/jquery.validate.js"></script>
 <script src="assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
+<script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
+<script src="assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
 <script src="js/jquery.Jcrop.js" type="text/javascript"></script>
 <script src="js/alerts.js" type="text/javascript"></script>
 <script src="js/validation.js" type="text/javascript"></script>
@@ -116,11 +119,8 @@ jQuery(document).ready(function() {
    Layout.init(); // init layout
    TableAdvanced.init();
    Index.init();   
-   Index.initDashboardDaterange();
    //jcrop bug Index.initJQVMAP(); // init index page's custom scripts
-   Index.initCalendar(); // init index page's custom scripts
    Index.initCharts(); // init index page's custom scripts
-   Index.initChat();
    Index.initMiniCharts();
    Index.initIntro();
    Tasks.initDashboardWidget();
