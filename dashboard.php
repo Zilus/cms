@@ -68,18 +68,20 @@
 							<?php
 								$sql="SELECT * FROM mytable";
 								$database->query($sql);
-								$rows = $database->resultset();
-								foreach($rows as &$row) {	
-									echo '<tr>
-											<td>
-												<a>'.utf8_decode($row['FName']." ".$row['LName']).'</a>
-											</td>
-											<td>'.$row['Age'].'</a></td>									
-											<td style="text-align:center">
-												<a href="posts_edit.php?id='.$row['ID'].'"><img src="images/icons/view.png" title="Mira tus predicciones" /></a>
-											</td>                        
-										</tr>';	
-								}	
+								if($database->rowCount()!=0) {
+									$rows = $database->resultset();
+									foreach($rows as &$row) {	
+										echo '<tr>
+												<td>
+													<a>'.utf8_decode($row['FName']." ".$row['LName']).'</a>
+												</td>
+												<td>'.$row['Age'].'</a></td>									
+												<td style="text-align:center">
+													<a href="posts_edit.php?id='.$row['ID'].'"><img src="images/icons/view.png" title="Mira tus predicciones" /></a>
+												</td>                        
+											</tr>';	
+									}
+								}
                             ?>   
 							</tbody>
 							</table>

@@ -73,14 +73,16 @@
 							$database = new Database();
 							$sql="SELECT * FROM galeria ORDER BY album_id ASC";
 							$database->query($sql);
-							$rows = $database->resultset();
-							foreach($rows as &$row) {
-								echo '<li '; if(pagActual()=="album_fotos.php" && intval($_GET['id'])==$row['album_id']) { echo ' class="active"'; }  else if(pagActual()=="foto_new.php" && intval($_GET['id'])==$row['album_id'] ) { echo ' class="active"'; } else if(pagActual()=="foto_new_upload.php" && intval($_POST['id'])==$row['album_id'] ) { echo ' class="active"'; } 
-								echo '>
-									<a href="album_fotos.php?id='.$row['album_id'].'">
-									<i class="fa fa-picture-o"></i>
-									'.$row['album_name'].'</a>
-								</li>';
+							if($database->rowCount()!=0) {
+								$rows = $database->resultset();
+								foreach($rows as &$row) {
+									echo '<li '; if(pagActual()=="album_fotos.php" && intval($_GET['id'])==$row['album_id']) { echo ' class="active"'; }  else if(pagActual()=="foto_new.php" && intval($_GET['id'])==$row['album_id'] ) { echo ' class="active"'; } else if(pagActual()=="foto_new_upload.php" && intval($_POST['id'])==$row['album_id'] ) { echo ' class="active"'; } 
+									echo '>
+										<a href="album_fotos.php?id='.$row['album_id'].'">
+										<i class="fa fa-picture-o"></i>
+										'.$row['album_name'].'</a>
+									</li>';
+								}
 							}
                         ?>
                     </ul>
