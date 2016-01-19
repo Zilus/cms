@@ -3,18 +3,17 @@ include('../config.php');
 if (!class_exists('Database')) {
     include('../../lib/database.class.php');
 }
-$current = md5($_REQUEST['current']);  
+
 $id=intval($_REQUEST['user_id']); 
 $database = new Database();
 
-$sql="SELECT * FROM users WHERE user_id = :user_id AND user_passwd = :current";
+$sql="SELECT * FROM users WHERE user_id = :user_id";
 $database->query($sql);
 $database->bind(':user_id', $id);
-$database->bind(':current', $current);
-$database->execute();
-$count=$database->rowCount();
+$row_user = $database->single();
+$check_passwd = password_verify($_REQUEST['current'], $row_user['user_passwd']);
 	
-if($count==1) {
+if($check_passwd) {
 	echo "true";
 } else {
 	echo 'false';

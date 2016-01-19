@@ -34,7 +34,7 @@ if($action['result'] != 'error'){
 		$seed = '0123456789abcdefghijklmnopqrstuvwxyz';
 		$hash = sha1(uniqid($seed . mt_rand(), true));
 		$hash = substr($hash, 0, 10);
-		$pass=md5($hash);
+		$pass = password_hash($hash, PASSWORD_DEFAULT);
 				
 		$sql="UPDATE `users` SET `user_passwd` = :user_passwd WHERE `user_id` = :user_id LIMIT 1";
 		$database->query($sql);
@@ -42,7 +42,15 @@ if($action['result'] != 'error'){
 		':user_id' => $confirm_info['userid'],
 		':user_passwd' => $pass
 		));
-		$database->execute();		
+		if($database->execute()){
+			$action['result'] = 'success';
+			$action['text'] = 'Restablecimiento correcto!';
+			$run=1;
+		}else{
+			$action['result'] = 'error';
+			$action['text'] = 'No se puede restablecer la contrase&ntilde;a debido a: '.$database->errorInfo();
+			$run=0;
+		}		
 		
 		//delete the confirm row
 		$sql="DELETE FROM `forgot` WHERE `id` = :f_id LIMIT 1";
@@ -96,17 +104,15 @@ if($action['result'] != 'error'){
 <div class="content">
 	<!-- BEGIN FORGOT PASSWORD FORM -->
 		<h3>Restablecer contrase&ntilde;a</h3>
-		<p>
-			 El estado de tu cuenta es:<strong> <?php echo $action['text']; ?></strong> 
-             
+		<p>             
              <?php
-				//if($action['result'] == 'success') {
+				if($run==1) {
 					echo '<br />
 						<br />
 						Tu contrase&ntilde;a temporal es: <strong>'.$hash.'</strong>
 						<br /><br>
 						Entra al sistema, edita tu perfil y cambia tu contrase&ntilde;a de inmediato!';
-				//}
+				}
 			?>
 		</p>
 		<div class="form-group">

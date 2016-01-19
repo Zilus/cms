@@ -154,7 +154,7 @@ var Metronic = function () {
         if (test.size() > 0) {
             test.each(function () {
                 if ($(this).parents(".checker").size() == 0) {
-                    $(this).show();
+                    $(this).show(); 
                     $(this).uniform();
                 }
             });

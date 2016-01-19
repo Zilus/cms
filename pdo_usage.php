@@ -7,6 +7,8 @@ include('includes/kick.php');
 include('lib/database.class.php');
 
 $database = new Database();
+//catch error;
+echo $database->errorInfo();
 
 //insert
 $sql="INSERT INTO mytable (FName, LName, Age, Gender) VALUES (:fname, :lname, :age, :gender)";

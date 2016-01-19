@@ -5,10 +5,11 @@ include('includes/functions.php');
 
 $database = new Database();
 
-$username = trim($_POST['login']);
-$passwd = md5($_POST['passwd']);
+$username = trim($_POST['username']);
+$passwd = trim($_POST['password']);
 $ipaddress = $_SERVER["REMOTE_ADDR"];
 $captcha_test=intval($_POST['captcha_challenge']);
+
 
 $sql="INSERT INTO LoginAttempts (ip,attempts,login,Last) VALUES ( :ipaddress, :attempts, :username, NOW())";
 $database->query($sql);
@@ -20,13 +21,30 @@ $database->execute();
 //Check IP
 $ipcheck=checkIP($ipaddress, $username);
 if($ipcheck==true) {
-	$sql="SELECT * FROM users WHERE user_login=:user_login AND user_passwd=:user_passwd";
+	$sql="SELECT * FROM users WHERE user_login=:user_login";
 	$database->query($sql); 
 	$database->bind(':user_login', $username);
-	$database->bind(':user_passwd', $passwd);
 	$row_user = $database->single();
+	$check_passwd = password_verify($passwd, $row_user['user_passwd']);
 
-	if ($row_user['user_login'] == $username && $row_user['user_passwd'] == $passwd) {
+	if ($check_passwd) {
+		//Cookie
+		if ($_POST["remember"]=="1") {
+			$identifier = hash('sha256', $row_user['user_id'].KEY);
+			$token = md5(uniqid(rand(), TRUE));
+			$timeout = time() + 60 * 60 * 24 * 365;	
+			$date = date("Y-m-d H:i:s", $timeout);
+		  	setcookie("oauth", "$identifier:$token", $timeout);
+			
+			$sql="INSERT INTO auth_tokens (identifier,token,userid,expires) VALUES (:identifier,:token, :userid, :expires)";
+			$database->query($sql);
+			$database->bind(':identifier', $identifier);
+			$database->bind(':token', $token);
+			$database->bind(':userid', $row_user['user_id']);
+			$database->bind(':expires', $date);
+			$database->execute();
+		}
+		
 		$_SESSION['id'] = $row_user['user_id'];
 		$_SESSION['login'] = $row_user['user_login'];
 		$_SESSION['fullname'] = $row_user['user_fullname'];
@@ -53,7 +71,7 @@ if($ipcheck==true) {
 		exit();		
 	} else { 
 		$_SESSION['logged'] = 0;
-		header("Location: index.php");
+		header("Location: index.php?e=1");
 		exit();
 	}
 } else {
@@ -69,13 +87,13 @@ if($ipcheck==true) {
 			exit();
 		} else {
 			//captcha bien
-			$sql="SELECT * FROM users WHERE user_login=:user_login AND user_passwd=:user_passwd";
+			$sql="SELECT * FROM users WHERE user_login=:user_login";
 			$database->query($sql); 
 			$database->bind(':user_login', $username);
-			$database->bind(':user_passwd', $passwd);
 			$row_user = $database->single();
+			$check_passwd = password_verify($passwd, $row_user['user_passwd']);
 			//Acceso
-			if ($row_user['user_login'] == $username && $row_user['user_passwd'] == $passwd) {
+			if ($check_passwd) {
 				$_SESSION['id'] = $row_user['user_id'];
 				$_SESSION['login'] = $row_user['user_login'];
 				$_SESSION['fullname'] = $row_user['user_fullname'];

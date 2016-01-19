@@ -2,7 +2,6 @@
 session_start();
 include('includes/globals.php');
 include('includes/functions.php');
-include_once 'securimage/securimage.php';
 $database = new Database();
 if(isset($_POST['avanzar'])){
 	$email = mysql_real_escape_string(trim($_POST['email'], ' '));

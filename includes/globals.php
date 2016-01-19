@@ -17,6 +17,11 @@ $database->bind(':settings_desc', 'ambulance');
 $row_ambulance = $database->single();
 
 $database->query('SELECT * FROM settings WHERE settings_desc= :settings_desc'); 
+$database->bind(':settings_desc', 'apiKey');
+$row = $database->single();
+define("KEY", htmlentities($row['settings_value']));
+
+$database->query('SELECT * FROM settings WHERE settings_desc= :settings_desc'); 
 $database->bind(':settings_desc', 'title');
 $row = $database->single();
 define("TITLE", htmlentities($row['settings_value']));
