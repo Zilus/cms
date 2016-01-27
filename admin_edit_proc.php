@@ -22,7 +22,7 @@ if($_POST['user_passwd'] ==""){
 	header('Location: '.$redirect);
 	exit();
 } else {
-	$passwd=md5($_POST['user_passwd']);
+	$passwd=password_hash($_POST['user_passwd'], PASSWORD_DEFAULT);
 	$sql="UPDATE users SET user_fullname= :user_fullname, user_login= :user_login, user_email= :user_email, user_passwd= :user_passwd, user_level= :user_level WHERE user_id= :user_id";
 	$database->query($sql);
 	$database->bindArray(array(

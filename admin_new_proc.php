@@ -4,7 +4,8 @@ include('includes/globals.php');
 include('includes/kick.php');
 $database = new Database();
 		
-$passwd = md5($_POST['user_passwd']);	
+$passwd=password_hash($_POST['user_passwd'], PASSWORD_DEFAULT);
+	
 $sql='INSERT INTO users (user_fullname, user_login, user_email, user_passwd, user_level) VALUES (:user_fullname, :user_login, :user_email, :user_passwd, :user_level)';			
 $database->query($sql);
 $database->bindArray(array(
