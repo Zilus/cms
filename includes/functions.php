@@ -221,9 +221,12 @@ function empty_avatar($avatar_row) {
 
 //Login attempts
 function checkIP($ip, $gt) {
-	$sql="SELECT * FROM LoginAttempts WHERE ip='".$ip."'";
-	$query=mysql_query($sql);
-	$count=mysql_num_rows($query);
+	$database = new Database();
+	$sql="SELECT * FROM LoginAttempts WHERE ip=:ip";
+	$database->query($sql); 
+	$database->bind(':ip', $ip);
+	$row = $database->single();
+	$count=$database->rowCount();
 	
 	//IP has less than 3 attempts
 	if($count<4) {

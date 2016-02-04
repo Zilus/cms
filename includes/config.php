@@ -4,10 +4,6 @@ define("DB_HOST", "localhost");
 define("DB_USER", "loopmx_sqlmaster");
 define("DB_PASS", 'JB@u4Mu$)zL3');
 define("DB_NAME", "loopmx_cmsdev");
-
-//Connection
-$conn = mysql_connect(DB_HOST, DB_USER, DB_PASS) or die('Error connecting to mysql');
-mysql_select_db(DB_NAME, $conn);
 	
 //email auth
 define("SMTP_USER","cmsdev@loop.mx");
