@@ -3,7 +3,7 @@ include('../config.php');
 if (!class_exists('Database')) {
     include('../../lib/database.class.php');
 }
-$user_fullname = mysql_real_escape_string($_REQUEST['user_fullname']) ; 
+$user_fullname = $_REQUEST['user_fullname']; 
 $database = new Database();
 
 $sql="SELECT user_fullname FROM users WHERE user_fullname = :user_fullname";

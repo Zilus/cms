@@ -3,7 +3,7 @@ include('../config.php');
 if (!class_exists('Database')) {
     include('../../lib/database.class.php');
 }
-$user_email = mysql_real_escape_string($_REQUEST['user_email']) ; 
+$user_email = $_REQUEST['user_email']; 
 $id=intval($_REQUEST['user_id']); 
 $database = new Database();
 

@@ -3,7 +3,7 @@ include('../config.php');
 if (!class_exists('Database')) {
     include('../../lib/database.class.php');
 }
-$album_name = mysql_real_escape_string($_REQUEST['album_name']) ; 
+$album_name = $_REQUEST['album_name']; 
 $database = new Database();
 
 $sql="SELECT album_name FROM galeria WHERE album_name = :album_name";
