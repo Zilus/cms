@@ -12,6 +12,11 @@ $hash = substr($hash, 0, 10);
 $dir = GALERIA_DIR."/".$hash;		
 if(!file_exists($dir)) {
 	mkdir($dir,0777); 
+} else {
+	$hash = sha1(uniqid($seed . mt_rand(), true));
+	$hash = substr($hash, 0, 10);
+	$dir = GALERIA_DIR."/".$hash;
+	mkdir($dir,0777); 
 }
 	
 $sql='INSERT INTO galeria (album_name, album_dir, album_status) VALUES (:album_name, :album_dir, :album_status)';			
