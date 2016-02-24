@@ -1,19 +1,19 @@
 <?php
 //PDO
-define("DB_HOST", "localhost");
-define("DB_USER", "loopmx_sqlmaster");
-define("DB_PASS", 'JB@u4Mu$)zL3');
-define("DB_NAME", "loopmx_cmsdev");
+define("DB_HOST", "");
+define("DB_USER", "");
+define("DB_PASS", '');
+define("DB_NAME", "");
 	
 //email auth
-define("SMTP_USER","cmsdev@loop.mx");
-define("SMTP_PASSWD",'JB@u4Mu$)zL3');
-define("SMTP_SERVER","mail.loop.mx");
-define("SMTP_PORT",26);
+define("SMTP_USER","");
+define("SMTP_PASSWD",'');
+define("SMTP_SERVER","");
+define("SMTP_PORT",);
 
 //paypal
-define("PAYPAL_EMAIL", "neozilus@gmail.com");
-define("PAYPAL_NOTIFICATIONS_EMAIL", "neozilus@gmail.com");
+define("PAYPAL_EMAIL", "");
+define("PAYPAL_NOTIFICATIONS_EMAIL", "");
 
 //System Type
 define("SYSTEM_TYPE", 2);
