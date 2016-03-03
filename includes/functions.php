@@ -409,7 +409,7 @@ function create_form($forma, $fields) {
 		//hidden
 		} else if($field['type']=="hidden") {
 			$forma_html.= '<div class="form-group">
-				<input id="'.$field['name'].'" name="'.$field['name'].'" class="input-error form-control" type="'.$field['type'].'">
+				<input id="'.$field['name'].'" name="'.$field['name'].'" class="input-error form-control" value="'.$field['value'].'" type="'.$field['type'].'">
 			</div>';
 		}
 	}
