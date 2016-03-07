@@ -37,12 +37,14 @@ if($row_ambulance['settings_value']==1) {
 <link href="plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
 <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <link href="plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/> 
+
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link href="plugins/select2/select2.css" rel="stylesheet" type="text/css"/>
 <link href="assets/admin/pages/css/login.css" rel="stylesheet" type="text/css"/>
 <link href="assets/admin/pages/css/error.css" rel="stylesheet" type="text/css"/>
 <link href="assets/admin/pages/css/inbox.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
 <!-- END PAGE LEVEL SCRIPTS -->
 <!-- BEGIN THEME STYLES -->
 <link href="assets/global/css/components.css" rel="stylesheet" type="text/css"/>
@@ -79,8 +81,6 @@ Bug
 <script src="assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
 <!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
 <script src="assets/global/plugins/fullcalendar/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
@@ -107,6 +107,8 @@ Bug
 <script src="assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
 <script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
 <script src="assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
+<script src="assets/admin/pages/scripts/components-pickers.js"></script>
+<script type="text/javascript" src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 <script src="js/jquery.Jcrop.js" type="text/javascript"></script>
 <script src="js/alerts.js" type="text/javascript"></script>
 <script src="js/validation.js" type="text/javascript"></script>
@@ -123,7 +125,7 @@ jQuery(document).ready(function() {
    Index.initCharts(); // init index page's custom scripts
    Index.initMiniCharts();
    Index.initIntro();
-   Tasks.initDashboardWidget();
+   ComponentsPickers.init();
 });
 </script>
 <!-- END JAVASCRIPTS -->

@@ -98,6 +98,18 @@
 										"editor"		=> 	false
 									),
 									array(
+										"type"			=>	"datepicker",
+										"label"			=>	"Fecha", 
+										"icon"			=>	"fa-calendar", 
+										"required"		=>	true, 
+										"name"			=>	"date",
+										"value"			=>	"",
+										"placeholder"	=>	"Fecha",
+										"disabled"		=>	false,
+										"data_values"	=> array(),
+										"editor"		=> false
+									),
+									array(
 										"type"			=>	"textarea",
 										"label"			=>	"Textarea", 
 										"icon"			=>	"fa-cogs", 

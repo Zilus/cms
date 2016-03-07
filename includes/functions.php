@@ -346,6 +346,18 @@ function create_form($forma, $fields) {
 					<input id="'.$field['name'].'" class="input-error form-control" type="'.$field['type'].'" placeholder="'.$field['placeholder'].'" name="'.$field['name'].'" value="'.$field['value'].'" '.$disabled.'>
 				</div>
 			</div>';
+		//datepicker
+		} else if($field['type']=="datepicker") {
+			$forma_html.='<div class="form-group"> 
+				<label>'.$field['label'].'</label>
+				<div class="input-group input-icon right date date-picker" data-date-format="dd-mm-yyyy">
+					<span class="input-group-addon">
+					<i class="fa '.$field['icon'].'"></i>
+					</span>
+					'.$required.'
+					<input id="'.$field['name'].'" class="input-error form-control" type="'.$field['type'].'" placeholder="'.$field['placeholder'].'" name="'.$field['name'].'" value="'.$field['value'].'" '.$disabled.'>
+				</div>
+			</div>';				
 		//textarea
 		} else if($field['type']=="textarea") {
 			$forma_html.='<div class="form-group">

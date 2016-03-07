@@ -32,7 +32,7 @@
                             <i class="fa fa-angle-right"></i>
 						</li>
                         <li>
-							<a href="admin_new.php">Edici&oacute;n de Usuario</a>
+							<a href="#">Edici&oacute;n de Usuario</a>
 						</li>
 					</ul>
 					<!-- END PAGE TITLE & BREADCRUMB-->
