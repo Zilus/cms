@@ -533,4 +533,99 @@ function createThumbnail($image_name,$new_width,$new_height,$uploadDir,$moveToDi
 
     return $result;
 }
+
+//Push
+function sendMessage($notificacion,$players,$t_url){
+	$content = array(
+	  "en" => $notificacion
+	  );
+	
+	if($t_url=="") {
+		$fields = array(
+		  'app_id' => APP_ID,
+		  'include_player_ids' => $players,
+		  'contents' => $content
+		);
+	} else {		
+		$fields = array(
+		  'app_id' => APP_ID,
+		  'include_player_ids' => $players,
+		  'data' => array("targetUrl" => $t_url),
+		  'contents' => $content
+		);
+	}
+	
+	$fields = json_encode($fields);
+	
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	curl_setopt($ch, CURLOPT_HEADER, FALSE);
+	curl_setopt($ch, CURLOPT_POST, TRUE);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+	
+	$response = curl_exec($ch);
+	curl_close($ch);
+	
+	return $response;
+	
+	//usage:
+	/*$notificacion="Mensaje push"; 
+	$t_url="La url"; (puede estar vacia)
+	$players=array();
+	foreach($row_device as &$device) {
+		array_push($players, $device['push_devices_push_id']);
+	}		
+	sendMessage($notificacion,$players,$t_url);
+	*/
+}
+
+//Push General
+function sendPush($notificacion, $t_url){
+	$content = array(
+	  "en" => $notificacion
+	  );
+	
+	if($t_url=="") {
+		$fields = array(
+		  'app_id' => APP_ID,
+		  'included_segments' => array('All'),
+		  'contents' => $content
+		);
+	} else {		
+		$fields = array(
+		  'app_id' => APP_ID,
+		  'included_segments' => array('All'),
+		  'data' => array("targetUrl" => $t_url),
+		  'contents' => $content
+		);
+	}
+	
+	$fields = json_encode($fields);
+	print("\nJSON sent:\n");
+    print($fields);
+
+	
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',
+                           'Authorization: Basic '.APP_KEY));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+	
+	$response = curl_exec($ch);
+	curl_close($ch);
+	
+	return $response;
+	
+	//usage:
+	/*$notificacion="Mensaje general";
+	sendPush($notificacion,$t_url);
+	*/
+}
 ?>

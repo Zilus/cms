@@ -58,6 +58,16 @@
 									"submit"	=>	"Enviar"
 								);
 								
+								//Dropdown from DB
+								$sql="SELECT * FROM settings";
+								$database->query($sql); 
+								$rows = $database->resultset();
+								$dw=0;
+								foreach($rows as &$row_dw) {
+									$operador[$dw]=array("value"=>$row_dw['settings_desc'],"option"=>$row_dw['settings_desc'], "checked"=>0);
+									$dw++;
+								}	
+								
 								$fields = array (
 									array(
 										"type"			=>	"text",
@@ -136,6 +146,21 @@
 									array(
 										"type"			=>	"dropdown",
 										"label"			=>	"Drop", 
+										"icon"			=>	"fa-cogs", 
+										"required"		=>	false, 
+										"name"			=>	"drop1",
+										"value"			=>	"",
+										"placeholder"	=>	"",
+										"disabled"		=>	false,
+										"data_values"	=> 	array(
+																array("value"=>1,"option"=>"Val 1", "checked"=>0),
+																array("value"=>2,"option"=>"Val 2", "checked"=>0),
+															),
+										"editor"		=> false					
+									),
+									array(
+										"type"			=>	"dropdown",
+										"label"			=>	"Drop From DB", 
 										"icon"			=>	"fa-cogs", 
 										"required"		=>	false, 
 										"name"			=>	"drop1",

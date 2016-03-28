@@ -52,6 +52,10 @@
 								echo crear_alerta("error", "<strong>Error:</strong> de dashboard");
 							} else if(intval($_GET['e']==2)) {
 								echo crear_alerta("success", "<strong>Exito:</strong> de dashboard");
+							} else if(intval($_GET['e']==3)) {
+								echo crear_alerta("success", "<strong>Exito:</strong> eliminar dashboard");
+							} else if(intval($_GET['e']==2)) {
+								echo crear_alerta("success", "<strong>Exito:</strong> editar dashboard");
 							}
 						?>		
                         
