@@ -94,8 +94,8 @@
 											<td>'.$level.'</a></td>
 											<td>'.$row['user_email'].'</a></td>
 											<td style="text-align:center">						
-												<a href="admin_edit.php?id='.$row['user_id'].'" title="Editar"><img src="images/icons/pencil.png" title="Editar" /></a>
-												<a href="admin_delete.php?id='.$row['user_id'].'" OnClick="return Confirm();" title="title"><img src="images/icons/cross.png" title="Eliminar" /></a>												
+												<a href="admin_edit.php?id='.$row['user_id'].'"><i class="fa fa-pencil pencil" title="Editar"></i></a>
+												<a href="admin_delete.php?id='.$row['user_id'].'" OnClick="return Confirm();"><i class="fa fa-trash-o trash" title="Eliminar entrada"></i></a>												
 											</td>                        
 										</tr>';	
 								}

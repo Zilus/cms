@@ -78,10 +78,10 @@
 								foreach($rows as &$row) {
 									
 									if($row['album_status']==1) {
-										$img="tick_circle.png";
+										$img='<i class="fa fa-check activei" title="Desactivar"></i>';
 										$action="album_noactive.php";
 									} else {
-										$img="cross_circle.png";
+										$img='<i class="fa fa-minus-circle noactivei" title="Activar"></i>';
 										$action="album_active.php";
 									}
 									
@@ -90,10 +90,10 @@
 												<a href="album_fotos.php?id='.$row['album_id'].'">'.$row['album_name'].'</a>
 											</td>									
 											<td style="text-align:center"> 
-												<a href="album_fotos.php?id='.$row['album_id'].'"><img src="images/icons/pic.png" title="Fotos" /></a>
-												<a href="album_edit.php?id='.$row['album_id'].'"><img src="images/icons/pencil.png" title="Editar" /></a>
-												<a href="'.$action.'?id='.$row['album_id'].'"><img src="images/icons/'.$img.'" title="Status" /></a>
-												<a href="album_delete.php?id='.$row['album_id'].'"  OnClick="return Confirm();"><img src="images/icons/cross.png" title="Eliminar" /></a>		
+												<a href="album_fotos.php?id='.$row['album_id'].'"><i class="fa  fa-picture-o pic" title="Ver fotos"></i></a>
+												<a href="album_edit.php?id='.$row['album_id'].'"><i class="fa fa-pencil pencil" title="Editar"></i></a>
+												<a href="'.$action.'?id='.$row['album_id'].'">'.$img.'</a>
+												<a href="album_delete.php?id='.$row['album_id'].'"  OnClick="return Confirm();"><i class="fa fa-trash-o trash" title="Eliminar"></i></a>		
 											</td>                        
 										</tr>';	
 								}	

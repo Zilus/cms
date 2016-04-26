@@ -86,15 +86,15 @@
 									
 									$ext = explode(".", $row['file_filename']);
 									if($ext[1]=="pdf") {
-										$icon="pdf.png";
+										$icon="fa-archive";
 									} else if($ext[1]=="xls" || $ext[1]=="xlsx") {
-										$icon="xls.png";
+										$icon="fa-bar-chart-o";
 									} else if($ext[1]=="doc" || $ext[1]=="docx") {
-										$icon="doc.png";
+										$icon="fa-file";
 									} else if($ext[1]=="jpg" || $ext[1]=="jpeg") {
-										$icon="pic.png";	
+										$icon="fa-picture-o";	
 									} else {
-										$icon="view.png";
+										$icon="fa-paperclip";
 									}
 									
 									
@@ -113,13 +113,13 @@
 												'.$row['user_fullname'].'
 											</td>								
 											<td style="text-align:center">
-												<a href="files_detail.php?mes='.$hash.'&id='.$i.'&f='.$row['file_id'].'&day='.$hash.'&y='.$row['file_year'].'&year='.date('Y').$hash.date('y Y').'"><img title="Ver detalles" src="images/icons/view.png"></a>	
+												<a href="files_detail.php?mes='.$hash.'&id='.$i.'&f='.$row['file_id'].'&day='.$hash.'&y='.$row['file_year'].'&year='.date('Y').$hash.date('y Y').'"><i class="fa fa-folder-open pic" title="Detalles"></i></a>	
 											</td> 
 											<td style="text-align:center">
-												<a href="download.php?mes='.$hash.'&id='.$row['file_month'].'&file='.$row['file_id'].'&day='.$hash.'&file='.$row['file_filename'].'&y='.$row['file_year'].'&year='.date('Y').$hash.date('m').'"><img title="Ver archivos" src="images/icons/'.$icon.'"></a>	
+												<a href="download.php?mes='.$hash.'&id='.$row['file_month'].'&file='.$row['file_id'].'&day='.$hash.'&file='.$row['file_filename'].'&y='.$row['file_year'].'&year='.date('Y').$hash.date('m').'"><i class="fa '.$icon.' pic" title="Descargar"></i</a>	
 											</td>
 											<td style="text-align:center">
-											<a href="files_delete.php?mes='.$hash.'&id='.$i.'&f='.$row['file_id'].'&day='.$hash.'&d='.$row['file_id'].'&m='.$mes.'&s=1&y='.$row['file_year'].'&year='.date('Y').$hash.date('y Y').'" OnClick="return Confirm();"><img src="images/icons/cross.png" title="Eliminar" /></a>
+											<a href="files_delete.php?mes='.$hash.'&id='.$i.'&f='.$row['file_id'].'&day='.$hash.'&d='.$row['file_id'].'&m='.$mes.'&s=1&y='.$row['file_year'].'&year='.date('Y').$hash.date('y Y').'" OnClick="return Confirm();"><i class="fa fa-trash-o trash" title="Eliminar"></i></a>
 											</td>          
 										</tr>';	
 								}	

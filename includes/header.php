@@ -106,17 +106,19 @@ if($row_ambulance['settings_value']==1) {
 <script src="js/validation.js" type="text/javascript"></script>
 <script src="js/system.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
-<script>
-$(document).ready(function() {	
-	<?php
-	//CKEditor upload fix
-	echo 'CKEDITOR.replace(\'posts_content\', {
-		"filebrowserImageUploadUrl": "'.ROOT_DIR.'assets/global/plugins/ckeditor/plugins/iaupload.php"
-	});';
-	?>
-// doc ready	
-});
-</script>
+<?php
+if(pagActual()=="blog_new.php" || pagActual()=="blog_edit.php") { 
+	echo '<script>
+	$(document).ready(function() {	
+		//CKEditor upload fix
+		CKEDITOR.replace(\'posts_content\', {
+			"filebrowserImageUploadUrl": "'.ROOT_DIR.'assets/global/plugins/ckeditor/plugins/iaupload.php"
+		});
+	// doc ready	
+	});
+	</script>';
+}
+?>
 <script>
 jQuery(document).ready(function() {    
    Metronic.init(); // init metronic core componets

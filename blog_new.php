@@ -51,7 +51,6 @@
 						</div>
 						<div class="portlet-body form">
                         <?php			
-							echo ROOT_DIR.'images/uploads/';
 							$forma = array(
 								"action"		=>	"blog_new_proc.php", 
 								"id"			=>	"",
