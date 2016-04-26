@@ -54,10 +54,10 @@ if($row_ambulance['settings_value']==1) {
 <link href="assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
 <link href="css/jquery.Jcrop.css" rel="stylesheet" type="text/css"/>
 <link href="css/pagination.css" rel="stylesheet" type="text/css"/>
+<link href="css/icons.css" rel="stylesheet" type="text/css"/>
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
 
-<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE PLUGINS -->
 <!--[if lt IE 9]>
 <script src="assets/global/plugins/respond.min.js"></script>
@@ -65,23 +65,15 @@ if($row_ambulance['settings_value']==1) {
 <![endif]-->
 <script src="assets/global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
-<!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 <script src="assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-<!--
-Bug
-<script src="assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>-->
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
-<script src="assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>
-<script src="assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
-<script src="assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
-<!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
 <script src="assets/global/plugins/fullcalendar/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
 <script src="assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
@@ -114,18 +106,27 @@ Bug
 <script src="js/validation.js" type="text/javascript"></script>
 <script src="js/system.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
-
+<script>
+$(document).ready(function() {	
+	<?php
+	//CKEditor upload fix
+	echo 'CKEDITOR.replace(\'posts_content\', {
+		"filebrowserImageUploadUrl": "'.ROOT_DIR.'assets/global/plugins/ckeditor/plugins/iaupload.php"
+	});';
+	?>
+// doc ready	
+});
+</script>
 <script>
 jQuery(document).ready(function() {    
    Metronic.init(); // init metronic core componets
    Layout.init(); // init layout
    TableAdvanced.init();
    Index.init();   
-   //jcrop bug Index.initJQVMAP(); // init index page's custom scripts
    Index.initCharts(); // init index page's custom scripts
    Index.initMiniCharts();
    Index.initIntro();
-   ComponentsPickers.init();
+   ComponentsPickers.init();  
 });
 </script>
 <!-- END JAVASCRIPTS -->

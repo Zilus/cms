@@ -30,6 +30,22 @@
                 
                 <li 
                 <?php
+					if(pagActual()=="blog.php" 
+						|| pagActual()=="blog_new.php"	
+						|| pagActual()=="blog_edit.php"					
+					) {
+						echo ' class="active"';
+					}
+				?>
+                >
+					<a href="blog.php">
+					<i class="fa fa-edit"></i>
+					<span class="title">Blog</span>
+					</a>
+				</li>
+                
+                <li 
+                <?php
 					if(pagActual()=="files.php" 
 						|| pagActual()=="files_new.php"		
 						|| pagActual()=="files_detail.php"					

@@ -64,7 +64,7 @@ define("IMG_DIR", INIT_DIR."/images");
 if(SYSTEM_TYPE==1) {
 	define("ADMIN_DIR", INIT_DIR."/admin");
 	define("GALERIA_DIR", "../images/galeria");
-	define("UPLOAD_DIR", "../images/uploads");
+	define("UPLOAD_DIR", "../images/uploads");	
 } else {
 	define("ADMIN_DIR", INIT_DIR);
 	define("GALERIA_DIR", "images/galeria");
