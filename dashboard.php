@@ -63,32 +63,56 @@
 							<thead class="flip-content">
 							<tr>
 								<th>Nombre</th>
-                               	<th>Edad</th>
+                               	<th>Nombre</th>
                                 <th style="text-align:center">Acciones</th>
 							</tr>
 							</thead>
                             
 							<tbody>
-							<?php
-								$sql="SELECT * FROM mytable";
-								$database->query($sql);
-								if($database->rowCount()!=0) {
-									$rows = $database->resultset();
-									foreach($rows as &$row) {	
-										echo '<tr>
-												<td>
-													<a>'.utf8_decode($row['FName']." ".$row['LName']).'</a>
-												</td>
-												<td>'.$row['Age'].'</a></td>									
-												<td style="text-align:center">
-													<a href="posts_edit.php?id='.$row['ID'].'"><img src="images/icons/view.png" title="Mira tus predicciones" /></a>
-												</td>                        
-											</tr>';	
-									}
+							<?php							
+								$sql="SELECT * FROM sample_data";
+								$database->query($sql);								
+								$rows = $database->resultset();
+								$count=$database->rowCount();
+								
+								$pages = new Paginator;
+								$pages->items_total = $count;
+								$pages->items_per_page= 2;  
+								$pages->mid_range = 5;
+								$pages->paginate();
+								
+								$sql=$sql.$pages->limit;
+								$database->query($sql);								
+								$rows = $database->resultset();
+								foreach($rows as &$row) {	
+									echo '<tr>
+										<td>
+											<a>'.$row['sample_data_name'].'</a>
+										</td>
+										<td>'.$row['sample_data_email'].'</a></td>									
+										<td style="text-align:center">
+											<a href="posts_edit.php?id='.$row['ID'].'"><img src="images/icons/view.png" title="Mira tus predicciones" /></a>
+										</td>                        
+									</tr>';	
 								}
                             ?>   
 							</tbody>
 							</table>
+                            
+                            <?php
+								if($count>=$itemspp) {
+									echo '<div class="row">
+										<div class="col-xs-7 col-xs-offset-5">
+											<div class="dataTables_paginate paging_bootstrap">
+												<ul class="pagination">
+													'.$pages->display_pages().'
+												</ul>
+											</div>
+										</div>
+									</div>';
+								}
+							?>
+                            
 						</div>
 					</div>
 					<!-- END SAMPLE TABLE PORTLET-->
