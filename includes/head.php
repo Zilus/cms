@@ -125,7 +125,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<img alt="" class="img-circle" width="27" src="<?php echo $_SESSION['avatar']; ?>"/>
 					<span class="username">
-					<? echo utf8_encode($_SESSION['fullname']); ?> </span>
+					<? echo $_SESSION['fullname']; ?> </span>
 					<i class="fa fa-angle-down"></i>
 					</a>
 					<ul class="dropdown-menu">
