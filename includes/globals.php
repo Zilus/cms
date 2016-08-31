@@ -51,8 +51,8 @@ $database->bind(':settings_desc', 'cms_subtitle');
 $row = $database->single();
 define("CMS_SUBTITLE", $row['settings_value']);
 
-define(COPY,'Desarrollo de: <a target="_blank" href="http://www.loop.mx">Loop Media</a> &copy; '.date("Y"));
-define(AUTHOR,strip_tags(utf8_encode(html_entity_decode($row_author['settings_value']))));
+define("COPY",'Desarrollo de: <a target="_blank" href="http://www.loop.mx">Loop Media</a> &copy; '.date("Y"));
+define("AUTHOR",'Oscar Azpeitia');
 
 
 //frontend constants
