@@ -5,7 +5,6 @@ include('includes/functions.php');
 session_start();
 session_destroy();
 if(isset($_COOKIE['oauth'])) {
-	
 	$cookie=explode(":",$_COOKIE['oauth']);
 	
 	$sql="DELETE FROM auth_tokens WHERE token=:token";

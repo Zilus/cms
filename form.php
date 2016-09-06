@@ -217,19 +217,8 @@
 									)
 								 );
 								
-								/*
-								$clave=multidimensional_search($fields, array('name'=>"user_level"));
-								$subclave=multidimensional_search($fields[$clave]["data_values"], array('value'=>$row['user_level']));
-								$fields[$clave]["data_values"][$subclave]["checked"]=1;
-								*/
-								
 								echo create_form($forma, $fields);
 							?>
-								
-									                             
-                                    				
-								
-								
 						</div>
 					</div>
             <!-- end content -->           

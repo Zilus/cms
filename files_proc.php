@@ -33,9 +33,12 @@ if($_FILES['file']['size'] != 0) {
 			':file_comment' => $comments,
 			':file_author' => $id
 		));
-		$database->execute(); 
+		if($database->execute()) {
+			$redirect="files.php?e=2";	
+		} else {
+			$redirect="files.php?e=1";	
+		}		
 		
-		$redirect="files.php?e=2";	
 		header("cache-Control: no-cache, must-revalidate");
 		header("Location: $redirect" );
 		exit();	

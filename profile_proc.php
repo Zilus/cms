@@ -11,9 +11,12 @@ $database->bind(':user_id', $id);
 $database->bind(':user_fullname', $_POST['user_fullname']);
 $database->bind(':user_login', $_POST['user_login']); 
 $database->bind(':user_email', $_POST['user_email']); 
-$database->execute();
+if($database->execute()) {
+	$redirect="profile.php?e=2";	
+} else {
+	$redirect="profile.php?e=1";	
+}
 
-$redirect="profile.php";
 header('Location: '.$redirect);
 exit();
 ?>

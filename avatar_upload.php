@@ -124,12 +124,10 @@ if($_FILES['avatar']['size'] != 0) {
         <!-- END CONTAINER -->';
         
         include("includes/footer.php");
-	    
 	//end html out
-	
 } else {
-header("cache-Control: no-cache, must-revalidate");
-header("Location: $redirect" );
-exit();
+	header("cache-Control: no-cache, must-revalidate");
+	header("Location: $redirect" );
+	exit();
 }
 ?>

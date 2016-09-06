@@ -9,9 +9,12 @@ $database->query($sql);
 $database->bindArray(array(
 	':posts_id' => $id
 ));
-$database->execute();	
+if($database->execute()) {
+	$redirect="blog.php?e=3";
+} else {
+	$redirect="blog.php?e=1";
+}	
 
-$redirect="blog.php?e=3";
 header('Location: '.$redirect);
 exit();
 ?> 

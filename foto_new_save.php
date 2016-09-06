@@ -4,7 +4,7 @@ include('includes/globals.php');
 include('includes/kick.php');
 
 $id=intval($_POST['id']);
-$sql="SELECT * FROM galeria WHERE album_id= :album_id";
+$sql="SELECT * FROM galeria WHERE album_id=:album_id";
 $database->query($sql); 
 $database->bind(':album_id', $id);
 $row_a = $database->single();
@@ -41,10 +41,13 @@ $database->bindArray(array(
 	':foto_album' => $id,
 	':foto_filename' => $hash
 ));
-$database->execute();	
-rename($image, $photo);
+if($database->execute()) {
+	rename($image, $photo);
+	$redirect="album_fotos.php?e=2&id=".$id;
+} else {
+	$redirect="album_fotos.php?e=1&id=".$id;
+}	
 
-$redirect="album_fotos.php?e=2&id=".$id;
 header('Location: '.$redirect);
 exit();
 ?> 

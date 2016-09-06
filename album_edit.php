@@ -49,7 +49,7 @@
                         <?php
 							$database = new Database();
 							$id=intval($_GET['id']);
-							$sql="SELECT * FROM galeria WHERE album_id= :id";
+							$sql="SELECT * FROM galeria WHERE album_id=:id";
 							$database->query($sql); 
 							$database->bind(':id', $id);
 							$row = $database->single();

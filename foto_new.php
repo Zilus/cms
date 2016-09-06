@@ -23,7 +23,7 @@
 					<ul class="page-breadcrumb breadcrumb">
                     <?php
 						$id=intval($_GET['id']);
-						$sql="SELECT * FROM galeria WHERE album_id= :album_id";
+						$sql="SELECT * FROM galeria WHERE album_id=:album_id";
 						$database->query($sql); 
 						$database->bind(':album_id', $id);
 						$row_a = $database->single();
@@ -60,7 +60,7 @@
                         	<?php
 								$database = new Database();
 								$id=intval($_GET['id']);
-								$sql="SELECT * FROM users WHERE user_id= :id";
+								$sql="SELECT * FROM users WHERE user_id=:id";
 								$database->query($sql); 
 								$database->bind(':id', $id);
 								$row = $database->single();

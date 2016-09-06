@@ -61,7 +61,7 @@
 						<div class="portlet-body flip-scroll">
                         <?php
 							$id=intval($_GET['f']);
-							$sql="SELECT * FROM `files` INNER JOIN users ON user_id=file_author WHERE file_id= :id";
+							$sql="SELECT * FROM `files` INNER JOIN users ON user_id=file_author WHERE file_id=:id";
 							$database->query($sql); 
 							$database->bind(':id', $id);
 							$row = $database->single();

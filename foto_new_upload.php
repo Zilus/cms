@@ -12,7 +12,7 @@ $seed = '0123456789abcdefghijklmnopqrstuvwxyz';
 $hash = sha1(uniqid($seed . mt_rand(), true));
 $hash = substr($hash, 0, 10).".jpg";
 
-$sql="SELECT * FROM galeria WHERE album_id= :album_id";
+$sql="SELECT * FROM galeria WHERE album_id=:album_id";
 $database->query($sql); 
 $database->bind(':album_id', $id);
 $row_a = $database->single();
@@ -135,10 +135,9 @@ if($_FILES['foto']['size'] != 0) {
         include("includes/footer.php");
 	    
 	//end html out
-	
 } else {
-header("cache-Control: no-cache, must-revalidate");
-header("Location: $redirect" );
-exit();
+	header("cache-Control: no-cache, must-revalidate");
+	header("Location: $redirect" );
+	exit();
 }
 ?>

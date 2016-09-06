@@ -9,9 +9,12 @@ $database->bindArray(array(
 	':posts_title' => $_POST['posts_title'],
 	':posts_content' => $_POST['posts_content']
 ));
-$database->execute();	
+if($database->execute()) {
+	$redirect="blog.php?e=2";
+} else {
+	$redirect="blog.php?e=1";
+}	
 
-$redirect="blog.php?e=2";
 header('Location: '.$redirect);
 exit();
 ?> 

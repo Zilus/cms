@@ -6,7 +6,7 @@ include('includes/kick.php');
 $d=intval($_GET['d']);
 
 $database = new Database();
-$sql="SELECT * FROM files WHERE file_id= :id";
+$sql="SELECT * FROM files WHERE file_id=:id";
 $database->query($sql); 
 $database->bind(':id', $d);
 $row = $database->single();
@@ -20,9 +20,12 @@ $query=mysql_query($sql);
 $sql="DELETE FROM files WHERE file_id=:id";
 $database->query($sql);
 $database->bind(':id', $d);
-$database->execute(); 
-
-$redirect="files.php";	
+if($database->execute()) {
+	$redirect="files.php?e=2";	
+} else {
+	$redirect="files.php?e=1";	
+}
+	
 header("cache-Control: no-cache, must-revalidate");
 header("Location: $redirect" );
 exit();	

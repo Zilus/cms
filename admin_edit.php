@@ -54,7 +54,7 @@
                         	<?php
 								$database = new Database();
 								$id=intval($_GET['id']);
-								$sql="SELECT * FROM users WHERE user_id= :id";
+								$sql="SELECT * FROM users WHERE user_id=:id";
 								$database->query($sql); 
 								$database->bind(':id', $id);
 								$row = $database->single();
@@ -155,8 +155,6 @@
 								$fields[$clave]["data_values"][$subclave]["checked"]=1;		*/
 								
 								echo create_form($forma, $fields);
-								//echo "<pre>";
-								//print_r($fields);
 							?>	
 						</div>
 					</div>

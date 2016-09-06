@@ -11,7 +11,11 @@ $database->bindArray(array(
 	':posts_content' => $_POST['posts_content'],
 	':posts_id' => $id
 ));
-$database->execute();	
+if($database->execute()) {
+	$redirect="blog.php?e=4";
+} else {
+	$redirect="blog.php?e=1";
+}		
 
 $redirect="blog.php?e=4";
 header('Location: '.$redirect);

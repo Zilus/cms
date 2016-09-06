@@ -59,11 +59,11 @@
 							}
 						?>		
                         
-							<table class="table table-bordered table-striped table-condensed flip-content">
-							<thead class="flip-content">
+							<table class="table table-bordered table-striped">
+							<thead>
 							<tr>
 								<th>Nombre</th>
-                               	<th>Nombre</th>
+                               	<th>Otro</th>
                                 <th style="text-align:center">Acciones</th>
 							</tr>
 							</thead>

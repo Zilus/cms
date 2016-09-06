@@ -44,7 +44,7 @@
 						</ul>
 						<div class="tab-content">
                         <?php
-                        	$sql="SELECT * FROM users WHERE user_id = :user_id";
+                        	$sql="SELECT * FROM users WHERE user_id=:user_id";
 							$database->query($sql); 
 							$database->bind(':user_id', $_SESSION['id']);
 							$row = $database->single();

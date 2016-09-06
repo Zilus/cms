@@ -28,7 +28,7 @@
 							<ul class="dropdown-menu pull-right" role="menu">
                             <?php
 								$id=intval($_GET['id']);
-								$sql="SELECT * FROM galeria WHERE album_id= :album_id";
+								$sql="SELECT * FROM galeria WHERE album_id=:album_id";
 								$database->query($sql); 
 								$database->bind(':album_id', $id);
 								$row_a = $database->single();
@@ -72,8 +72,8 @@
 									echo crear_alerta("success", "<strong>Exito:</strong> foto guardada correctamente");
 								}
 							?>
-							<table class="table table-bordered table-striped table-condensed flip-content">
-							<thead class="flip-content">
+							<table class="table table-bordered table-striped">
+							<thead>
 							<tr>
 								<th>Foto</th>
                                 <th style="text-align:center">Acciones</th>

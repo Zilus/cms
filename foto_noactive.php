@@ -6,12 +6,16 @@ include('includes/kick.php');
 $id=intval($_GET['id']);
 $album=intval($_GET['album']);
 
-$sql="UPDATE fotos SET foto_status=0 WHERE foto_id= :id";
+$sql="UPDATE fotos SET foto_status=:foto_status WHERE foto_id=:id";
 $database->query($sql);
-$database->bind(':id', $id);  
-$database->execute();
+$database->bind(':id', $id); 
+$database->bind(':foto_status', 0);  
+if($database->execute()) {
+	$redirect="album_fotos.php?e=2&id=".$album; 
+} else {
+	$redirect="album_fotos.php?e=1&id=".$album; 
+}	
 
-$redirect="album_fotos.php?id=".$album; 
 header('Location: '.$redirect);
 exit();
 ?>

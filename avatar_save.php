@@ -11,7 +11,7 @@ $sizelimit_y = $_POST['he'];
 $image = UPLOAD_DIR."/".$hash;
 $path = AVATAR_DIR."/".$hash;
 
-$sql="SELECT * FROM users WHERE user_id = :id";
+$sql="SELECT * FROM users WHERE user_id=:id";
 $database->query($sql); 
 $database->bind(':id', $id);
 $row = $database->single();
@@ -38,17 +38,18 @@ imagejpeg($dest,$path,$compress);
 imagedestroy($dest);
 imagedestroy($src);
 	
-$sql="UPDATE users SET user_avatar= '$hash' WHERE user_id= :id";
+$sql="UPDATE users SET user_avatar='$hash' WHERE user_id= :id";
 $database->query($sql);
 $database->bind(':id', $id); 
-$database->execute();
+if($database->execute()) {
+	unlink($image);
+	//Avatar Fix
+	$_SESSION['avatar'] = AVATAR_DIR."/".$hash;
+	$redirect="profile.php?section=avatar";
+} else {
+	$redirect="profile.php?section=avatar";
+}	
 
-unlink($image);
-
-//Avatar Fix
-$_SESSION['avatar'] = AVATAR_DIR."/".$hash;
-
-$redirect="profile.php?section=avatar";
 header('Location: '.$redirect);
 exit();
 ?> 

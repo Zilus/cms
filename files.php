@@ -61,15 +61,15 @@
 								echo crear_alerta("success", "<strong>Exito:</strong> archivo cargado correctamente");
 							}
 						?>
-							<table class="table table-bordered table-striped table-condensed flip-content">
-							<thead class="flip-content">
+							<table class="table table-bordered table-striped">
+							<thead>
 							<tr>
 								<th>Titulo</th>
                                	<th>Fecha</th>
                                 <th>Autor</th>
-                                <th style="text-align:center">Ver detalles</th>
-                                <th style="text-align:center">Descargar</th>
-                                <th style="text-align:center">Eliminar</th>
+                                <th class="text-center">Ver detalles</th>
+                                <th class="text-center">Descargar</th>
+                                <th class="text-center">Eliminar</th>
 							</tr>
 							</thead>
                             
@@ -112,14 +112,14 @@
 											<td>
 												'.$row['user_fullname'].'
 											</td>								
-											<td style="text-align:center">
+											<td class="text-center">
 												<a href="files_detail.php?mes='.$hash.'&id='.$i.'&f='.$row['file_id'].'&day='.$hash.'&y='.$row['file_year'].'&year='.date('Y').$hash.date('y Y').'"><i class="fa fa-folder-open pic" title="Detalles"></i></a>	
 											</td> 
-											<td style="text-align:center">
+											<td class="text-center">
 												<a href="download.php?mes='.$hash.'&id='.$row['file_month'].'&file='.$row['file_id'].'&day='.$hash.'&file='.$row['file_filename'].'&y='.$row['file_year'].'&year='.date('Y').$hash.date('m').'"><i class="fa '.$icon.' pic" title="Descargar"></i</a>	
 											</td>
-											<td style="text-align:center">
-											<a href="files_delete.php?mes='.$hash.'&id='.$i.'&f='.$row['file_id'].'&day='.$hash.'&d='.$row['file_id'].'&m='.$mes.'&s=1&y='.$row['file_year'].'&year='.date('Y').$hash.date('y Y').'" OnClick="return Confirm();"><i class="fa fa-trash-o trash" title="Eliminar"></i></a>
+											<td class="text-center">
+												<a href="files_delete.php?mes='.$hash.'&id='.$i.'&f='.$row['file_id'].'&day='.$hash.'&d='.$row['file_id'].'&m='.$mes.'&s=1&y='.$row['file_year'].'&year='.date('Y').$hash.date('y Y').'" OnClick="return Confirm();"><i class="fa fa-trash-o trash" title="Eliminar"></i></a>
 											</td>          
 										</tr>';	
 								}	

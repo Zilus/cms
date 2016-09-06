@@ -18,7 +18,7 @@ if($action['result'] != 'error'){
 	$key = $_GET['key'];
 	
 	//check if the key is in the database
-	$sql = "SELECT * FROM `forgot` WHERE `email` = :email AND `key2` = :key LIMIT 1";
+	$sql = "SELECT * FROM `forgot` WHERE `email`=:email AND `key2`=:key LIMIT 1";
 	$database->query($sql); 
 	$database->bind(':email', $email);
 	$database->bind(':key', $key);
@@ -36,7 +36,7 @@ if($action['result'] != 'error'){
 		$hash = substr($hash, 0, 10);
 		$pass = password_hash($hash, PASSWORD_DEFAULT);
 				
-		$sql="UPDATE `users` SET `user_passwd` = :user_passwd WHERE `user_id` = :user_id LIMIT 1";
+		$sql="UPDATE `users` SET `user_passwd`=:user_passwd WHERE `user_id`=:user_id LIMIT 1";
 		$database->query($sql);
 		$database->bindArray(array(
 		':user_id' => $confirm_info['userid'],
@@ -53,7 +53,7 @@ if($action['result'] != 'error'){
 		}		
 		
 		//delete the confirm row
-		$sql="DELETE FROM `forgot` WHERE `id` = :f_id LIMIT 1";
+		$sql="DELETE FROM `forgot` WHERE `id`=:f_id LIMIT 1";
 		$database->query($sql);
 		$database->bindArray(array(
 		':f_id' => $confirm_info['id']
@@ -65,24 +65,16 @@ if($action['result'] != 'error'){
 		$database->execute();	
 		
 		if($update_users){
-						
 			$action['result'] = 'success';
 			$action['text'] = 'Restablecimiento correcto!';
-		
-		}else{
-
+		} else {
 			$action['result'] = 'error';
-			$action['text'] = 'No se puede restablecer la contrase&ntilde;a debido a: '.mysql_error();;
-		
+			$action['text'] = 'No se puede restablecer la contrase&ntilde;a debido a: '.mysql_error();
 		}
-	
-	}else{
-	
+	} else {
 		$action['result'] = 'error';
 		$action['text'] = 'Tu clave de activaci&oacute;n es incorrecta!.';
-	
 	}
-
 }
 
 ?>

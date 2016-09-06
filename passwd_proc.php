@@ -17,9 +17,12 @@ if($pass=="") {
 	$database->query($sql); 
 	$database->bind(':user_id', $id);
 	$database->bind(':user_passwd', $new);
-	$database->execute();
-	
-	$redirect="profile.php";			
+	if($database->execute()) {
+		$redirect="profile.php?e=2";	
+	} else {
+		$redirect="profile.php?e=1";	
+	}
+				
 	header('Location: '.$redirect); 
 	exit();
 }

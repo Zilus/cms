@@ -6,7 +6,7 @@ include('includes/kick.php');
 $posts_extra=utf8_encode($_POST['posts_extra']);
 
 $database = new Database();
-$sql="UPDATE posts SET posts_extra = :posts_extra  WHERE posts_section= :posts_section";
+$sql="UPDATE posts SET posts_extra=:posts_extra  WHERE posts_section=:posts_section";
 $database->query($sql);
 $database->bind(':posts_section', 'contacto');
 $database->bind(':posts_extra', $posts_extra);

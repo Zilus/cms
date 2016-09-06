@@ -54,7 +54,7 @@
 							}
 											
 							$database = new Database();
-							$sql="SELECT * FROM posts WHERE posts_section= :section";
+							$sql="SELECT * FROM posts WHERE posts_section=:section";
 							$database->query($sql); 
 							$database->bind(':section', 'contacto');
 							$row = $database->single();

@@ -12,7 +12,7 @@ if(isset($_POST['avanzar'])){
 		header("Location: $redirect");
 		exit();
 	} else {
-		$sql = "SELECT * FROM users WHERE user_email = :email";
+		$sql = "SELECT * FROM users WHERE user_email=:email";
 		$database->query($sql); 
 		$database->bind(':email', $email);
 		$database->execute();

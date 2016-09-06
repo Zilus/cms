@@ -66,8 +66,8 @@
 									echo crear_alerta("success", "<strong>Exito:</strong> usuario creado correctamente");
 								}
 							?>
-							<table class="table table-bordered table-striped table-condensed flip-content">
-							<thead class="flip-content">
+							<table class="table table-bordered table-striped">
+							<thead>
                                 <tr>
                                    <th>Nombre</th>
                                    <th>Nivel</th>
