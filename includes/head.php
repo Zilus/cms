@@ -21,10 +21,23 @@
 			<ul class="nav navbar-nav pull-right">
 				<!-- BEGIN INBOX DROPDOWN -->
 				<li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+                <?php
+					$sql="SELECT inbox_id FROM inbox WHERE inbox_to=:inbox_to AND inbox_read=:inbox_read";
+					$database->query($sql);
+					$database->bind('inbox_to', $_SESSION['id']);
+					$database->bind('inbox_read', 0);
+					$database->execute();					
+					$nuevos_mensajes=$database->rowCount();
+				?>
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 					<i class="fa fa-envelope"></i>
-					<span class="badge badge-default">
-					4 </span>
+					<?php
+						if($nuevos_mensajes!=0) {
+							echo '<span class="badge badge-default">
+								'.$nuevos_mensajes.' 
+							</span>';
+						}
+					?>	
 					</a>
 					<ul class="dropdown-menu">
 						<li>
