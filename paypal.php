@@ -1,16 +1,28 @@
 <?php
 require_once("includes/config.php"); 
+include('includes/globals.php');
 
 define('EMAIL_ADD', PAYPAL_NOTIFICATIONS_EMAIL); // define any notification email
 define('PAYPAL_EMAIL_ADD', PAYPAL_EMAIL); // facilitator email which will receive payments change this email to a live paypal account id when the site goes live
 require_once("lib/paypal_class.php");
-$p 				= new paypal_class(); // paypal class
+$p 				= new paypal_class();
 $p->admin_mail 	= EMAIL_ADD; // set notification email
 $action 		= $_REQUEST["action"]; 
 
 switch($action){
 	case "process": // case process insert the form data in DB and process to the paypal
-		mysql_query("INSERT INTO `pagos` (`invoice`, `rodada`,  `costo`, `fname`, `lname`, `email`, `tel`, status, `fecha`) VALUES ('".$_POST["invoice"]."','".$_POST["rodada"]."', '".$_POST["product_amount"]."', '".$_POST["payer_fname"]."', '".$_POST["payer_lname"]."', '".$_POST["payer_email"]."', '".$_POST["tel"]."', 'pendiente', NOW())") or die(mysql_error());
+		$sql="INSERT INTO `pagos` (`invoice`, `costo`, `fname`, `lname`, `email`, `tel`, status, `fecha`) VALUES (`:invoice`, `:costo`, `:fname`, `:lname`, `:email`, `:tel`, :status, `:fecha`, NOW())";
+		$database->query($sql);
+		$database->bindArray(array(
+			':invoice'	=> $_POST["invoice"],
+			':costo' 	=> $_POST["product_amount"],
+			':fname' 	=> $_POST["payer_fname"],
+			':lname' 	=> $_POST["payer_lname"],
+			':email' 	=> $_POST["payer_email"],
+			':tel' 		=> $_POST["tel"],
+			':status' 	=> "pendiente"
+		));
+		$database->execute();
 		$this_script = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 		$p->add_field('business', PAYPAL_EMAIL_ADD); // Call the facilitator eaccount
 		$p->add_field('cmd', $_POST["cmd"]); // cmd should be _cart for cart checkout
@@ -60,48 +72,49 @@ switch($action){
 		$payment_status = strtolower($_POST["payment_status"]);
 		$invoice		= $_POST["invoice"];
 		$log_array		= print_r($_POST, TRUE);
-		$log_query		= "SELECT * FROM `paypal_log` WHERE `txn_id` = '$trasaction_id'";
-		$log_check 		= mysql_query($log_query);
-		if(mysql_num_rows($log_check) <= 0){
-			mysql_query("INSERT INTO `paypal_log` (`txn_id`, `log`, `posted_date`) VALUES ('$trasaction_id', '$log_array', NOW())");
+		$log_query		= "SELECT * FROM `paypal_log` WHERE `txn_id`=:txn_id";
+		$database->query($log_query);
+		$database->bind(':txn_id', $trasaction_id);
+		$log_check 		= $database->single();
+		if($database->rowCount() <= 0){
+			$sql="INSERT INTO `paypal_log` (`txn_id`, `log`, `posted_date`) VALUES (`:txn_id`, `:log`, NOW())";
+			$database->query($sql);
+			$database->bind(':txn_id', $trasaction_id);
+			$database->bind(':log', $log_array);
+			$database->execute();
 		}else{
-			mysql_query("UPDATE `paypal_log` SET `log` = '$log_array' WHERE `txn_id` = '$trasaction_id'");
+			$sql="UPDATE `paypal_log` SET `log`=:log WHERE `txn_id`=:txn_id";
+			$database->query($sql);
+			$database->bind(':txn_id', $trasaction_id);
+			$database->bind(':log', $log_array);
+			$database->execute();
 		} // Save and update the logs array
 		$paypal_log_fetch 	= mysql_fetch_array(mysql_query($log_query));
 		$paypal_log_id		= $paypal_log_fetch["id"];
 		if ($p->validate_ipn()){ // validate the IPN, do the others stuffs here as per your app logic
-			mysql_query("UPDATE `pagos` SET `trasaction_id` = '$trasaction_id ', `log_id` = '$paypal_log_id', `status` = 'Pagado' WHERE `invoice` = '$invoice'") or die(mysql_error());
+			$sql="UPDATE `pagos` SET `trasaction_id`=:trasaction_id, `log_id` =:log_id,  `status`=:status WHERE `invoice`=:invoice";
+			$database->query($sql);
+			$database->bind(':trasaction_id', $trasaction_id);
+			$database->bind(':log_id', $paypal_log_id);
+			$database->bind(':status', "Pagado");
+			$database->bind(':invoice', $invoice);
+			$database->execute();
 			//$subject = 'Instant Payment Notification - Recieved Payment';
 			//$p->send_report($subject); // Send the notification about the transaction
 			
-			$sql="SELECT * FROM pagos INNER JOIN rodadas ON rodadas_id=rodada INNER JOIN levels ON levels_id=rodadas_level WHERE `invoice` = '$invoice'";
-			$query=mysql_query($sql);
-			$row=mysql_fetch_assoc($query);
-			
 			require_once('lib/swift_required.php');
-			$sql="SELECT * FROM posts WHERE posts_section='contacto'";
-			$query_m=mysql_query($sql);
-			@$row_m=mysql_fetch_assoc($query_m);
+			$sql="SELECT * FROM posts WHERE posts_section=:posts_section";
+			$database->query($sql);
+			$database->bind(':posts_section', "contacto");
+			@$row_m=$database->single();
 			
-			$to=mysql_real_escape_string($row_m['posts_extra']);
-			$to="maudeavila@bym.mx";
+			$to=$row_m['posts_extra'];
 			$name=$row['fname'];
 			$lastname=$row['lname'];
 			$email=$row['email'];
 			$tel=$row['tel'];
 			$metodo="Paypal";
-			
-			$rodada=$row['rodadas_name'];	
-			$costo=$row['rodadas_costo'];	
-			$fecha=$row['rodadas_day']." / ".$row['rodadas_month']." / ".$row['rodadas_year'];		
-			$nivel=$row['levels_name'];
-				
-			
-			if($row['rodadas_type']==1) {
-				$tipo="Rodada";
-			} else {
-				$tipo="Viaje";
-			}				
+					
 			//mail stuff
 			$subject="Solicitud de rodada";  
 			$msg = '<div style="font-family:Arial, Helvetica, sans-serif; padding:50px;">
@@ -125,48 +138,18 @@ switch($action){
 			</div>';
 			
 			$to=$email;
-			$transport = Swift_SmtpTransport::newInstance($smtp_server,$smtp_port)
-			  ->setUsername($smtp_user)
-			  ->setPassword($smtp_passwd)
+			$transport = Swift_SmtpTransport::newInstance(SMTP_SERVER, SMTP_PORT)
+			  ->setUsername(SMTP_USER)
+			  ->setPassword(SMTP_PASSWD)
 			  ;
 			$mailer = Swift_Mailer::newInstance($transport);
 			$message = Swift_Message::newInstance($subject)
-			  ->setFrom(array($smtp_user => 'Webmaster Bici y Montaña'))
+			  ->setFrom(array(SMTP_USER => 'Webmaster'))
 			  ->setTo(array($to => $to))
 			  ->setBody($msg, 'text/html')
 				;
 		  
-			$result = $mailer->send($message);
-			  
-			$msg2 = '<div style="font-family:Arial, Helvetica, sans-serif; padding:50px;">
-				<p style="color:#30534b; font-size:18px">Estimad@ '.$name.' '.$lastname.'</p>
-					Tu pago se realizo correctamente.<br>
-					Si tienes alguna duda por favor envianos un correo. REcuerda llevar tu No. de comprobante.
-				</p>
-					
-				<p>
-					Rodada: <strong>'.$rodada.'</strong><br>
-					Costo: <strong>$ '.$costo.' MXN</strong><br>
-					Fecha: <strong>'.$fecha.'</strong><br>
-					Nivel: <strong>'.$nivel.'</strong><br>
-					Tipo: <strong>'.$tipo.'</strong><br>
-					Forma de pago: <strong>'.$metodo.'</strong><br>
-					Estatus: <strong>Pagado</strong><br>
-					Comprobante No.: <strong>'.$row['invoice'].'</strong><br>
-			</div>';
-			
-			$transport = Swift_SmtpTransport::newInstance($smtp_server,$smtp_port)
-			  ->setUsername($smtp_user)
-			  ->setPassword($smtp_passwd)
-			  ;
-			$mailer = Swift_Mailer::newInstance($transport);
-			$message2 = Swift_Message::newInstance($subject)
-			  ->setFrom(array($smtp_user => 'Webmaster Bici y Montaña'))
-			  ->setTo(array($email => $email))
-			  ->setBody($msg2, 'text/html')
-				;
-			$result = $mailer->send($message2);
-			
+			$result = $mailer->send($message);			
 		}else{
 			$subject = 'Instant Payment Notification - Payment Fail';
 			$p->send_report($subject); // failed notification
@@ -176,37 +159,6 @@ switch($action){
 ?>
 <?php include("common/header.php"); ?>
 		
-        <?php include("common/sub.php"); ?>
-                
-        <div class="spacer"></div> 
-        
-        <div id="slider_small">
-        <?php
-			$sql="SELECT * FROM slider ORDER BY RAND() LIMIT 1";
-			$query=mysql_query($sql)                           
-; 
-			while($row_i=mysql_fetch_assoc($query)) {	
-				echo '<img src="images/slider/'.$row_i['slider_img'].'">';	
-			}
-		?> 
-        </div> 
-        
-        <div class="spacer"></div>
-        
-        <div id="contenido1">
-        	<div id="solicita1"> 
-            </div>
-        	<div id="solicita_content">
-            	<?php
-					echo $escupe;			
-				?>
-            	
-            	
-            </div>
-            <div id="solicita2">
-            </div>
-        </div>
-        
-        <div class="spacer"></div>
+        Enviado (HTML Stuff)
         
 <?php include("common/footer.php"); ?>
