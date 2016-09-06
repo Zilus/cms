@@ -39,50 +39,69 @@
 							<a href="javascript:;" data-title="Compose" class="btn green">
 							<i class="fa fa-edit"></i> Redactar </a>
 						</li>
-						<li class="inbox active">
-							<a href="javascript:;" class="btn" data-title="Inbox">
-							Recibidos (4) </a>
-							<b></b>
-						</li>
-						<li class="sent">
-							<a class="btn" href="javascript:;" data-title="Sent">
-							Enviados </a>
-							<b></b>
-						</li>
-                        <li class="favs">
-							<a class="btn" href="javascript:;" data-title="Favs">
-							Favoritos </a>
-							<b></b>
-						</li>
-						<li class="trash">
-							<a class="btn" href="javascript:;" data-title="Trash">
-							Papalera </a>
-							<b></b>
-						</li>
+                        <?php
+							$sql="SELECT * FROM mailbox";
+							$database->query($sql);
+							$rows_menu=$database->resultset();
+							
+							foreach($rows_menu as $row_menu) {
+								$file=basename(__FILE__, '.php');
+								if($file==strtolower($row_menu['mailbox_name'])) {
+									$active="active";
+								} else {
+									$active="";
+								}
+								
+								if(strtolower($row_menu['mailbox_name'])=="inbox") {
+									$sql="SELECT inbox_id FROM inbox WHERE inbox_to=:inbox_to AND inbox_read=:inbox_read";
+									$database->query($sql);
+									$database->bind('inbox_to', $_SESSION['id']);
+									$database->bind('inbox_read', 0);
+									$database->execute();
+									$msgcount="(".$database->rowCount().")";
+								} else {
+									$msgcount="";
+								}
+								
+								echo '<li class="'.$active.'">
+									<a href="'.strtolower($row_menu['mailbox_name']).'.php" class="btn" data-title="'.$row_menu['mailbox_name'].'">
+									'.$row_menu['mailbox_name'].' '.$msgcount.' </a>
+									<b></b>
+								</li>';
+							}
+						?>
 					</ul>
 				</div>
 				<div class="col-md-10">
 					<div class="inbox-header">
 						<h1 class="pull-left">Bandeja de entrada</h1>
-						<form class="form-inline pull-right" action="index.html">
+						<!-- TODO searchable inbox
+                        <form class="form-inline pull-right" action="index.html">
 							<div class="input-group input-medium">
 								<input type="text" class="form-control" placeholder="Buscar">
 								<span class="input-group-btn">
 								<button type="submit" class="btn green"><i class="fa fa-search"></i></button>
 								</span>
 							</div>
-						</form>
+						</form>-->
 					</div>
                     
 					<div class="inbox-content">
                     	<table class="table table-striped table-advance table-hover">
+                        <?php
+							$sql="SELECT inbox_id FROM inbox WHERE inbox_to=:inbox_to";
+							$database->query($sql);
+							$database->bind('inbox_to', $_SESSION['id']);							
+							$mensajes=$database->resultset();
+							$total_mensajes=$database->rowCount();
+						?>
                             <thead>
                             <tr>
                                 <th colspan="3">
                                 </th>
                                 <th class="pagination-control" colspan="3">
                                     <span class="pagination-info">
-                                    70 mensajes 
+                                    <?php echo $total_mensajes; ?> mensajes 
                                    	</span>
                                 </th>
                             </tr>
