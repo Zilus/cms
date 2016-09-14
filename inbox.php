@@ -23,7 +23,7 @@
 					<ul class="page-breadcrumb breadcrumb">
 						<li>
 							<i class="fa fa-envelope"></i>
-							<a>Mensajes</a>
+							<a href="inbox.php">Mensajes</a>
 						</li>
 					</ul>
 					<!-- END PAGE TITLE & BREADCRUMB-->
@@ -36,7 +36,7 @@
 				<div class="col-md-2">
 					<ul class="inbox-nav margin-bottom-10">
 						<li class="compose-btn">
-							<a href="javascript:;" data-title="Compose" class="btn green">
+							<a href="inbox_new.php" data-title="Compose" class="btn green">
 							<i class="fa fa-edit"></i> Redactar </a>
 						</li>
                         <?php
@@ -89,130 +89,50 @@
 					<div class="inbox-content">
                     	<table class="table table-striped table-advance table-hover">
                         <?php
-							$sql="SELECT inbox_id FROM inbox WHERE inbox_to=:inbox_to";
+							$sql="SELECT inbox_id FROM inbox WHERE inbox_to=:inbox_to AND inbox_mailbox=:inbox_mailbox";
 							$database->query($sql);
-							$database->bind('inbox_to', $_SESSION['id']);							
+							$database->bind('inbox_to', $_SESSION['id']);	
+							$database->bind('inbox_mailbox', 1);							
 							$mensajes=$database->resultset();
 							$total_mensajes=$database->rowCount();
 						?>
                             <thead>
-                            <tr>
-                                <th colspan="3">
-                                </th>
-                                <th class="pagination-control" colspan="3">
-                                    <span class="pagination-info">
-                                    <?php echo $total_mensajes; ?> mensajes 
-                                   	</span>
-                                </th>
-                            </tr>
+                                <tr>
+                                    <th colspan="3">
+                                    </th>
+                                    <th class="pagination-control" colspan="3">
+                                        <span class="pagination-info">
+                                        <?php echo $total_mensajes; ?> mensajes 
+                                        </span>
+                                    </th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr class="unread" data-messageid="1">
-                                <td class="inbox-small-cells">
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                </td>
-                                <td class="view-message hidden-xs">
-                                     <a href="algo">Petronas IT</a>
-                                </td>
-                                <td class="view-message ">
-                                     <a href="algo">New server for datacenter needed</a>
-                                </td>
-                                <td class="view-message text-right">
-                                     <a href="algo">16:30 PM</a>
-                                </td>
-                                <td class="inbox-small-cells">
-                                     <a href="#" OnClick="return Confirm();"><i class="fa fa-trash-o"></i></a>		
-                                </td>
-                            </tr>
-                            <tr class="unread" data-messageid="2">
-                                <td class="inbox-small-cells">
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                </td>
-                                <td class="view-message hidden-xs">
-                                     Daniel Wong
-                                </td>
-                                <td class="view-message">
-                                     Please help us on customization of new secure server
-                                </td>
-                                <td class="view-message text-right">
-                                     March 15
-                                </td>
-                                <td class="inbox-small-cells">
-                                     <a href="#" OnClick="return Confirm();"><i class="fa fa-trash-o"></i></a>		
-                                </td>
-                            </tr>
-                            <tr data-messageid="3">
-                                <td class="inbox-small-cells">
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                </td>
-                                <td class="view-message hidden-xs">
-                                     John Doe
-                                </td>
-                                <td class="view-message">
-                                     Lorem ipsum dolor sit amet
-                                </td>
-                                <td class="view-message text-right">
-                                     March 15
-                                </td>
-                                <td class="inbox-small-cells">
-                                     <a href="#" OnClick="return Confirm();"><i class="fa fa-trash-o"></i></a>		
-                                </td>
-                            </tr>
-                            <tr data-messageid="4">
-                                <td class="inbox-small-cells">
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                </td>
-                                <td class="view-message hidden-xs">
-                                     Facebook
-                                </td>
-                                <td class="view-message">
-                                     Dolor sit amet, consectetuer adipiscing
-                                </td>
-                                <td class="view-message text-right">
-                                     March 14
-                                </td>
-                                <td class="inbox-small-cells">
-                                     <a href="#" OnClick="return Confirm();"><i class="fa fa-trash-o"></i></a>		
-                                </td>
-                            </tr>
-                            <tr data-messageid="5">
-                                <td class="inbox-small-cells">
-                                    <a href="#"><i class="fa fa-star inbox-started"></i></a>
-                                </td>
-                                <td class="view-message hidden-xs">
-                                     John Doe
-                                </td>
-                                <td class="view-message">
-                                     Lorem ipsum dolor sit amet
-                                </td>
-                                <td class="view-message text-right">
-                                     March 15
-                                </td>
-                                <td class="inbox-small-cells">
-                                     <a href="#" OnClick="return Confirm();"><i class="fa fa-trash-o"></i></a>		
-                                </td>
-                            </tr>
-                            <tr data-messageid="6">
-                                <td class="inbox-small-cells">
-                                    <a href="#"><i class="fa fa-star inbox-started"></i></a>
-                                </td>
-                                <td class="view-message hidden-xs">
-                                     Facebook
-                                </td>
-                                <td class="view-message">
-                                     Dolor sit amet, consectetuer adipiscing
-                                </td>
-                                <td class="view-message text-right">
-                                     March 14
-                                </td>
-                                <td class="inbox-small-cells">
-                                     <a href="#" OnClick="return Confirm();"><i class="fa fa-trash-o"></i></a>		
-                                </td>
-                            </tr>
+                            <?php
+								foreach($mensajes as &$mensaje) {
+									if($mensaje['inbox_read']==0) { $unred=='class="unread"'; } else { $unred==''; }
+									if($mensaje['inbox_fav']==1) { $star='inbox-started'; } else { $star=''; }
+									echo '<tr '.$unread.'>
+										<td class="inbox-small-cells">
+											<a href="inbox_fav.php?msg='.$mensaje['inbox_id'].'&fav='.$fav.'"><i class="fa fa-star '.$star.'"></i></a>
+										</td>
+										<td class="view-message hidden-xs">
+											 <a href="inbox_detail.php?msg='.$mensaje['inbox_id'].'">'.$mensaje['inbox_to'].'</a>
+										</td>
+										<td class="view-message ">
+											 <a href="inbox_detail.php?msg='.$mensaje['inbox_id'].'">'.$mensaje['inbox_title'].'</a>
+										</td>
+										<td class="view-message text-right">
+											 <a href="inbox_detail.php?msg='.$mensaje['inbox_id'].'">'.$mensaje['inbox_date'].'</a>
+										</td>
+										<td class="inbox-small-cells">
+											 <a href="inbox_trash.php?msg='.$mensaje['inbox_id'].'" OnClick="return Confirm();"><i class="fa fa-trash-o"></i></a>		
+										</td>
+									</tr>';
+								}
+							?>
                             </tbody>
-                            </table>
-                    
-                    
+                     	</table>
 					</div>
 				</div>
 			</div>
