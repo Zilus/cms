@@ -64,7 +64,7 @@
 							<tr>
 								<th>Nombre</th>
                                	<th>Otro</th>
-                                <th style="text-align:center">Acciones</th>
+                                <th class="text-center">Acciones</th>
 							</tr>
 							</thead>
                             
@@ -90,7 +90,7 @@
 											<a>'.$row['sample_data_name'].'</a>
 										</td>
 										<td>'.$row['sample_data_email'].'</a></td>									
-										<td style="text-align:center">
+										<td class="text-center">
 											<a href="posts_edit.php?id='.$row['ID'].'"><img src="images/icons/view.png" title="Mira tus predicciones" /></a>
 										</td>                        
 									</tr>';	

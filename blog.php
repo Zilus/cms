@@ -75,7 +75,7 @@
 							<tr>
                                	<th>Titulo</th>
                                 <th>Fecha</th>
-                                <th style="text-align:center">Acciones</th>
+                                <th class="text-center">Acciones</th>
 							</tr>
 							</thead>
                             
@@ -92,7 +92,7 @@
 											<td>
 												<a>'.$date[0].' de '.date_mes($date[1]).' de '.$date[2].'</a>
 											</td>								
-											<td style="text-align:center">
+											<td class="text-center">
 												<a href="blog_edit.php?id='.$row['posts_id'].'"><i class="fa fa-pencil pencil" title="Editar entrada"></i></a>
 												<a href="blog_delete.php?id='.$row['posts_id'].'"  OnClick="return Confirm();"><i class="fa fa-trash-o trash" title="Eliminar entrada"></i></a>	
 											</td>                        

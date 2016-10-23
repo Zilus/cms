@@ -76,7 +76,7 @@
 							<thead>
 							<tr>
 								<th>Foto</th>
-                                <th style="text-align:center">Acciones</th>
+                                <th class="text-center">Acciones</th>
 							</tr>
 							</thead>
                             
@@ -100,7 +100,7 @@
 											<td>
 												<a target="_blank" href="'.GALERIA_DIR.'/'.$row_a['album_dir'].'/'.$row['foto_filename'].'"><img width="150" src="'.GALERIA_DIR.'/'.$row_a['album_dir'].'/thumb-'.$row['foto_filename'].'" /></a>
 											</td>
-											<td style="text-align:center">	
+											<td class="text-center">	
 												<a href="'.$action.'?id='.$row['foto_id'].'&album='.$row_a['album_id'].'">'.$img.'</a>					
 												
 												<a href="foto_delete.php?id='.$row['foto_id'].'&album='.$row_a['album_id'].'" OnClick="return Confirm();"><i class="fa fa-trash-o trash" title="Eliminar"></i></a>										

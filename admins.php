@@ -72,7 +72,7 @@
                                    <th>Nombre</th>
                                    <th>Nivel</th>
                                    <th>Email</th>
-                                   <th style="text-align:center">Acciones</th>
+                                   <th class="text-center">Acciones</th>
                                 </tr>  
 							</thead>
                             
@@ -93,7 +93,7 @@
 											<td><a href="admin_edit.php?id='.$row['user_id'].'">'.$row['user_fullname'].'</a></td>
 											<td>'.$level.'</a></td>
 											<td>'.$row['user_email'].'</a></td>
-											<td style="text-align:center">						
+											<td class="text-center">						
 												<a href="admin_edit.php?id='.$row['user_id'].'"><i class="fa fa-pencil pencil" title="Editar"></i></a>
 												<a href="admin_delete.php?id='.$row['user_id'].'" OnClick="return Confirm();"><i class="fa fa-trash-o trash" title="Eliminar entrada"></i></a>												
 											</td>                        

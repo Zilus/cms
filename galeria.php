@@ -65,7 +65,7 @@
 							<thead class="flip-content">
 							<tr>
 								<th>Nombre</th>
-                                <th style="text-align:center">Acciones</th>
+                                <th class="text-center">Acciones</th>
 							</tr>
 							</thead>
                             
@@ -89,7 +89,7 @@
 											<td>
 												<a href="album_fotos.php?id='.$row['album_id'].'">'.$row['album_name'].'</a>
 											</td>									
-											<td style="text-align:center"> 
+											<td class="text-center"> 
 												<a href="album_fotos.php?id='.$row['album_id'].'"><i class="fa  fa-picture-o pic" title="Ver fotos"></i></a>
 												<a href="album_edit.php?id='.$row['album_id'].'"><i class="fa fa-pencil pencil" title="Editar"></i></a>
 												<a href="'.$action.'?id='.$row['album_id'].'">'.$img.'</a>
