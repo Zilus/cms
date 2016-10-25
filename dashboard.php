@@ -91,7 +91,7 @@
 										</td>
 										<td>'.$row['sample_data_email'].'</a></td>									
 										<td class="text-center">
-											<a href="posts_edit.php?id='.$row['ID'].'"><img src="images/icons/view.png" title="Mira tus predicciones" /></a>
+											<a href="posts_edit.php?id='.$row['ID'].'"><i class="fa fa-pencil pencil" title="Editar"></i></a>
 										</td>                        
 									</tr>';	
 								}
