@@ -27,10 +27,9 @@ $database->query($sql);
 $database->bind(':id', $id); 
 
 if($database->execute()) {
-	rename($image, $photo);
-	$redirect="album_fotos.php?e=2&id=".$id;
+	$redirect="album_fotos.php?e=2&id=".$album;
 } else {
-	$redirect="album_fotos.php?e=1&id=".$id;
+	$redirect="album_fotos.php?e=1&id=".$album;
 }
 
 header('Location: '.$redirect);
